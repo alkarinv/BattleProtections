@@ -1,0 +1,12 @@
+name: BattleProtections
+
+main: mc.alk.protection.Protections
+
+version: 1.0.4
+
+author: alkarin
+description: "Create protections regions"
+depend: [Vault, WorldEdit, WorldGuard]
+commands:
+    protect:
+        aliases: [prot]
