@@ -38,7 +38,7 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 		MC.sendMessage(sender, "&2/protect delete <region>");
 		MC.sendMessage(sender, "&2/protect share <region> <player>");
 		MC.sendMessage(sender, "&2/protect unshare <region> <player>");
-		MC.sendMessage(sender, "&2/protect list");		
+		MC.sendMessage(sender, "&2/protect list");
 	}
 
 	@MCCommand(cmds={"list"},inGame=true)
@@ -79,11 +79,11 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 		return true;
 	}
 
-	@MCCommand(cmds={"share"},inGame=true, alphanum={1}, usage="prot share <region> <player>")
+	@MCCommand(cmds={"share"},inGame=true, alphanum={1}, usage="prot share <region> <player>", perm="prot.share")
 	public boolean regionShare(Player p, String regionid, Player p2){
 		World w = p.getWorld();
 		String id = p.getName()+"-"+regionid;
-		ProtectedRegion region = pc.getRegion(w, (String) id);
+		ProtectedRegion region = pc.getRegion(w, id);
 		if (region == null){
 			return sendMessage(p, ChatColor.RED + "That region doesnt exist");}
 		if (!pc.ownsRegion(p,region)){
@@ -94,11 +94,11 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 			return sendMessage(p, ChatColor.RED + "Error sharing region.");
 	}
 
-	@MCCommand(cmds={"unshare","remove"},inGame=true, alphanum={1}, usage="prot unshare <region> <player>")
+	@MCCommand(cmds={"unshare","remove"},inGame=true, alphanum={1}, usage="prot unshare <region> <player>", perm="prot.unshare")
 	public boolean regionUnshare(Player p, String regionid, Player p2){
 		World w = p.getWorld();
 		String id = p.getName()+"-"+regionid;
-		ProtectedRegion region = pc.getRegion(w, (String) id);
+		ProtectedRegion region = pc.getRegion(w, id);
 		if (region == null){
 			return sendMessage(p, ChatColor.RED + "That region doesnt exist");}
 		if (!pc.ownsRegion(p,region)){
@@ -109,7 +109,7 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 			return sendMessage(p, ChatColor.RED + "Error unsharing region.");
 	}
 
-	@MCCommand(cmds={"add"},inGame=true, alphanum={1}, usage="prot add <region>")
+	@MCCommand(cmds={"add"},inGame=true, alphanum={1}, usage="prot add <region>", perm="prot.add")
 	public boolean regionAdd(Player p, String regionid){
 		pc.addDefaultRegion(p.getWorld(), "PlayerDefault");
 		int nProts = pc.getAllowedProtections(p);
@@ -120,7 +120,7 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 			mc.sendMsg(p, ChatColor.RED+"You are using all &6"+nProts+"&c of your protections");
 			return mc.sendMsg(p, ChatColor.GOLD+"/protection list: &e to see them");
 		}
-		String id = p.getName()+"-"+regionid; 
+		String id = p.getName()+"-"+regionid;
 		World w = p.getWorld();
 		if (pc.getRegion(w, id) != null){
 			return sendMessage(p, ChatColor.RED + "You already have a region called &6" +regionid+"&c");}
@@ -141,14 +141,14 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 		try{
 			if (pc.addRegion(p,sel,id))
 				return sendMessage(p, ChatColor.GREEN + "Region &6"+regionid+ChatColor.GREEN+" added");
-			else 
+			else
 				return sendMessage(p, ChatColor.RED + "Error adding region. Contact an Administrator");
 		} catch (Exception e){
 			return sendMessage(p, e.getMessage());
 		}
 	}
 
-	@MCCommand(cmds={"listSelectionPlayers"},op=true,inGame=true, alphanum={1}, 
+	@MCCommand(cmds={"listSelectionPlayers"},op=true,inGame=true, alphanum={1},
 			usage="prot listSelectionPlayers: list players having regions in a selected area")
 	public boolean regionListPlayersInSelection(Player p){
 
@@ -159,7 +159,7 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 		Collection<String> players = pc.getPlayersInSelection(sel);
 		if (players == null || players.isEmpty()){
 			return sendMessage(p, "&2There are no players that have regions in this selection");}
-		
+
 		StringBuilder sb = new StringBuilder();
 		boolean first = true;
 		for (String s: players){
@@ -169,12 +169,12 @@ public class ProtectionExecutor extends CustomCommandExecutor {
 		}
 		return sendMessage(p, "&2The following players have selections in this region " + sb.toString());
 	}
-	
-	@MCCommand(cmds={"delete","del"},inGame=true)
+
+	@MCCommand(cmds={"delete","del"},inGame=true, perm="prot.delete")
 	public boolean regionDelete(Player p, String regionid){
 		World w = p.getWorld();
-		String id = p.getName()+"-"+regionid; 
-		ProtectedRegion region = pc.getRegion(w, (String) id);
+		String id = p.getName()+"-"+regionid;
+		ProtectedRegion region = pc.getRegion(w, id);
 		if (region == null){
 			return sendMessage(p, ChatColor.RED + "That region doesnt exist");}
 		if (!pc.ownsRegion(p,region)){
