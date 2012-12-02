@@ -57,6 +57,7 @@ public class Protections extends JavaPlugin{
 		}
 		return true;
 	}
+
 	private boolean loadWorldGuardPlugin() {
 		Plugin plugin= Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
 

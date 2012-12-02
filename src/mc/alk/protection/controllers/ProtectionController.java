@@ -22,8 +22,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.domains.DefaultDomain;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.databases.ProtectionDatabaseException;
-import com.sk89q.worldguard.protection.flags.DefaultFlag;
-import com.sk89q.worldguard.protection.flags.StateFlag.State;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.ProtectedPolygonalRegion;
@@ -118,8 +116,8 @@ public class ProtectionController {
 		try {
 			wgp.getRegionManager(w).addRegion(region);
 			mgr.save();
-			region.setFlag(DefaultFlag.CHEST_ACCESS,State.ALLOW);
-			region.setFlag(DefaultFlag.PVP,State.ALLOW);
+//			region.setFlag(DefaultFlag.CHEST_ACCESS,State.ALLOW);
+//			region.setFlag(DefaultFlag.PVP,State.ALLOW);
 			defaultRegions.put(w, region);
 		} catch (ProtectionDatabaseException e) {
 			e.printStackTrace();
